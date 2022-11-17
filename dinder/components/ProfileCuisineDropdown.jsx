@@ -25,8 +25,8 @@ function ProfileCuisineDropdown() {
       <MultipleSelectList
         boxStyles={{
           borderRadius: 20,
-          marginTop: "10%",
           backgroundColor: "pink",
+          margin: 12,
         }}
         dropdownStyles={{ backgroundColor: "white" }}
         setSelected={(val) => setSelected(val)}
