@@ -5,8 +5,10 @@ import ProfileCuisineDropdown from "../components/ProfileCuisineDropdown";
 import ProfilePostcodeSelector from "../components/ProfilePostcodeSelector";
 
 function Profile({ email }) {
+  console.log(email);
   return (
     <View>
+      <Text style={{ textAlign: "center", marginTop: "5%" }}>{email}</Text>
       <ProfilePostcodeSelector />
       <ProfileCuisineDropdown />
     </View>

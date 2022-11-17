@@ -8,8 +8,6 @@ import {
 export default function ProfilePostcodeSelector() {
   const [postcode, setPostcode] = useState("");
 
-  console.log(postcode);
-
   return (
     <SafeAreaView>
       <TextInput
