@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
@@ -8,17 +9,15 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 
-function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  console.log(email);
+function SignIn({ setEmail, setPassword }) {
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("../images/testlogo.png")} />
+      <Image style={styles.image} source={require("../images/DINDA.png")} />
 
       <StatusBar style="auto" />
       <View style={styles.inputView}>
@@ -36,7 +35,7 @@ function SignIn() {
           placeholder="Password."
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={(newPassword) => setPassword(newPassword)}
         />
       </View>
 
@@ -44,9 +43,14 @@ function SignIn() {
         <Text style={styles.forgot_button}>New User?</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.loginBtn}>
+      <Pressable
+        style={styles.loginBtn}
+        onPress={() => {
+          navigation.navigate("Profile");
+        }}
+      >
         <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }
@@ -54,13 +58,16 @@ function SignIn() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
+    backgroundColor: "lightyellow",
     alignItems: "center",
     justifyContent: "center",
   },
 
   image: {
     marginBottom: 40,
+    width: "100%",
+    height: "50%",
   },
 
   inputView: {
