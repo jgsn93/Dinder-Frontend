@@ -13,9 +13,11 @@ export default function TabNavigator() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [postcode, setPostcode] = useState("");
+  const [maybePile, setMaybePile] = useState([]);
 
   const screenOptions = {
     tabBarLabelStyle: {
+      color: "white",
       fontSize: 15,
       margin: 0,
       padding: 0,
@@ -23,7 +25,7 @@ export default function TabNavigator() {
     tabBarStyle: [
       {
         height: 120,
-        backgroundColor: "pink",
+        backgroundColor: "#424242",
         display: "flex",
       },
       null,
@@ -68,7 +70,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Swipe List"
-        component={SwipeList}
+        children={() => <SwipeList setMaybePile={setMaybePile} />}
         options={{
           tabBarIcon: () => {
             return (
@@ -78,11 +80,12 @@ export default function TabNavigator() {
               ></Image>
             );
           },
+          headerShown: false,
         }}
       />
       <Tab.Screen
         name="Maybe Pile"
-        component={MaybePile}
+        children={() => <MaybePile maybePile={maybePile} />}
         options={{
           tabBarIcon: () => {
             return (
@@ -92,6 +95,7 @@ export default function TabNavigator() {
               ></Image>
             );
           },
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -106,6 +110,7 @@ export default function TabNavigator() {
               ></Image>
             );
           },
+          headerShown: false,
         }}
       />
     </Tab.Navigator>
