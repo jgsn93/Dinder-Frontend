@@ -7,7 +7,9 @@ import {
   View,
   Image,
   TextInput,
-  Button,
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
   TouchableOpacity,
   Pressable,
 } from "react-native";
@@ -16,42 +18,59 @@ function SignIn({ setEmail, setPassword }) {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={require("../images/DINDA.png")} />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <>
+          <Image
+            style={styles.image}
+            source={require("../images/chickenguy.png")}
+          />
 
-      <StatusBar style="auto" />
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email."
-          placeholderTextColor="#003f5c"
-          onChangeText={(newEmail) => setEmail(newEmail)}
-        />
-      </View>
+          <StatusBar style="auto" />
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Email"
+              placeholderTextColor="#003f5c"
+              onChangeText={(newEmail) => setEmail(newEmail)}
+            />
+          </View>
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password."
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={(newPassword) => setPassword(newPassword)}
-        />
-      </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Password"
+              placeholderTextColor="#003f5c"
+              secureTextEntry={true}
+              onChangeText={(newPassword) => setPassword(newPassword)}
+            />
+          </View>
 
-      <TouchableOpacity>
-        <Text style={styles.forgot_button}>New User?</Text>
-      </TouchableOpacity>
+          <TouchableOpacity>
+            <Text
+              style={styles.forgot_button}
+              onPress={() => {
+                navigation.navigate("Registration");
+              }}
+            >
+              New User?
+            </Text>
+          </TouchableOpacity>
 
-      <Pressable
-        style={styles.loginBtn}
-        onPress={() => {
-          navigation.navigate("Profile");
-        }}
-      >
-        <Text style={styles.loginText}>LOGIN</Text>
-      </Pressable>
-    </View>
+          <Pressable
+            style={styles.loginBtn}
+            onPress={() => {
+              navigation.navigate("Profile");
+            }}
+          >
+            <Text style={styles.loginText}>LOGIN</Text>
+          </Pressable>
+        </>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -61,11 +80,12 @@ const styles = StyleSheet.create({
     // backgroundColor: "#fff",
     backgroundColor: "lightyellow",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
 
   image: {
-    marginBottom: 40,
+    marginTop: 20,
+    marginBottom: 10,
     width: "100%",
     height: "50%",
   },
@@ -76,7 +96,7 @@ const styles = StyleSheet.create({
     width: "70%",
     height: 45,
     marginBottom: 20,
-
+    marginTop: 10,
     alignItems: "center",
   },
 

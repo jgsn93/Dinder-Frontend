@@ -5,18 +5,29 @@ import SwipeList from "./screens/SwipeList";
 import SignIn from "./screens/SignIn";
 import Profile from "./screens/Profile";
 import MaybePile from "./screens/MaybePile";
+import Registration from "./screens/Registration";
 
 export default function TabNavigator() {
   const Tab = createBottomTabNavigator();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [postcode, setPostcode] = useState("");
 
   const screenOptions = {
-    tabBarStyle: {
-      height: 120,
-      backgroundColor: "pink",
+    tabBarLabelStyle: {
+      fontSize: 15,
+      margin: 0,
+      padding: 0,
     },
+    tabBarStyle: [
+      {
+        height: 120,
+        backgroundColor: "pink",
+        display: "flex",
+      },
+      null,
+    ],
     tabBarItemStyle: {
       margin: 5,
       borderRadius: 10,
@@ -24,16 +35,7 @@ export default function TabNavigator() {
   };
 
   return (
-    <Tab.Navigator
-      tabBarOptions={{
-        labelStyle: {
-          fontSize: 15,
-          margin: 0,
-          padding: 0,
-        },
-      }}
-      {...{ screenOptions }}
-    >
+    <Tab.Navigator {...{ screenOptions }}>
       <Tab.Screen
         name="Log In"
         children={() => (
@@ -44,6 +46,24 @@ export default function TabNavigator() {
             display: "none",
           },
           tabBarButton: () => null,
+          headerShown: false,
+        })}
+      />
+      <Tab.Screen
+        name="Registration"
+        children={() => (
+          <Registration
+            setEmail={setEmail}
+            setPassword={setPassword}
+            setPostcode={setPostcode}
+          />
+        )}
+        options={() => ({
+          tabBarStyle: {
+            display: "none",
+          },
+          tabBarButton: () => null,
+          headerShown: false,
         })}
       />
       <Tab.Screen
