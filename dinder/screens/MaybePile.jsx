@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   Box,
   Heading,
@@ -12,95 +12,72 @@ import {
 import React from "react";
 
 export default function MaybePile({ maybePile }) {
-  console.log(maybePile);
+  if (maybePile.length === 0) {
+    return (
+      <Box flex={1} bg="#FD3A73" alignItems="center" justifyContent="center">
+        <Text>Your Maybe Pile is empty! Get matches from your Swipe List!</Text>
+      </Box>
+    );
+  }
 
   return (
-    <Box alignItems="center">
-      <Box
-        maxW="80"
-        rounded="lg"
-        overflow="hidden"
-        borderColor="coolGray.200"
-        borderWidth="1"
-        _dark={{
-          borderColor: "coolGray.600",
-          backgroundColor: "gray.700",
-        }}
-        _web={{
-          shadow: 2,
-          borderWidth: 0,
-        }}
-        _light={{
-          backgroundColor: "gray.50",
-        }}
-      >
-        <Box>
-          <AspectRatio w="100%" ratio={16 / 9}>
-            <Image
-              source={{
-                uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
-              }}
-              alt="image"
-            />
-          </AspectRatio>
-          <Center
-            bg="violet.500"
-            _dark={{
-              bg: "violet.400",
-            }}
-            _text={{
-              color: "warmGray.50",
-              fontWeight: "700",
-              fontSize: "xs",
-            }}
-            position="absolute"
-            bottom="0"
-            px="3"
-            py="1.5"
-          >
-            PHOTOS
-          </Center>
-        </Box>
-        <Stack p="4" space={3}>
-          <Stack space={2}>
-            <Heading size="md" ml="-1">
-              The Garden City
-            </Heading>
-            <Text
-              fontSize="xs"
-              _light={{
-                color: "violet.500",
-              }}
+    <ScrollView bg="#FD3A73">
+      <Box bg="#FD3A73" alignItems="center" marginTop="100">
+        {maybePile.map((restaurantCard) => {
+          return (
+            <Box
+              key={restaurantCard.name}
+              maxW="80"
+              marginTop="25"
+              rounded="lg"
+              overflow="hidden"
+              borderColor="coolGray.200"
+              borderWidth="1"
               _dark={{
-                color: "violet.400",
+                borderColor: "coolGray.600",
+                backgroundColor: "gray.700",
               }}
-              fontWeight="500"
-              ml="-0.5"
-              mt="-1"
+              _web={{
+                shadow: 2,
+                borderWidth: 0,
+              }}
+              _light={{
+                backgroundColor: "white",
+              }}
             >
-              The Silicon Valley of India.
-            </Text>
-          </Stack>
-          <Text fontWeight="400">
-            Bengaluru (also called Bangalore) is the center of India's high-tech
-            industry. The city is also known for its parks and nightlife.
-          </Text>
-          <HStack alignItems="center" space={4} justifyContent="space-between">
-            <HStack alignItems="center">
-              <Text
-                color="coolGray.600"
-                _dark={{
-                  color: "warmGray.200",
-                }}
-                fontWeight="400"
-              >
-                6 mins ago
-              </Text>
-            </HStack>
-          </HStack>
-        </Stack>
+              <Box>
+                <AspectRatio w="100%" ratio={4 / 3}>
+                  <Image
+                    source={restaurantCard.image}
+                    size="2xl"
+                    alt="food image"
+                    width="100%"
+                  />
+                </AspectRatio>
+              </Box>
+              <Stack p="4" space={3} alignItems="center">
+                <Stack space={2}>
+                  <Heading marginTop="5" size="md" ml="-1">
+                    {restaurantCard.name}
+                  </Heading>
+                </Stack>
+                <Text fontWeight="400">🍴{restaurantCard.type}</Text>
+                <Image
+                  source={require("../images/choose.png")}
+                  size="xs"
+                  alt="select"
+                ></Image>
+                <HStack
+                  alignItems="center"
+                  space={4}
+                  justifyContent="space-between"
+                ></HStack>
+              </Stack>
+            </Box>
+          );
+        })}
       </Box>
-    </Box>
+    </ScrollView>
   );
 }
 
