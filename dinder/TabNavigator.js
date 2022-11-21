@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Button } from "react-native";
 import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SwipeList from "./screens/SwipeList";
@@ -6,6 +6,7 @@ import SignIn from "./screens/SignIn";
 import Profile from "./screens/Profile";
 import MaybePile from "./screens/MaybePile";
 import Registration from "./screens/Registration";
+import { getHeaderTitle } from "@react-navigation/elements";
 
 export default function TabNavigator() {
   const Tab = createBottomTabNavigator();
@@ -16,8 +17,9 @@ export default function TabNavigator() {
   const [maybePile, setMaybePile] = useState([]);
 
   const screenOptions = {
+    tabBarActiveTintColor: "#FD3A73",
+    tabBarInactiveTintColor: "white",
     tabBarLabelStyle: {
-      color: "white",
       fontSize: 15,
       margin: 0,
       padding: 0,
@@ -85,7 +87,9 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Maybe Pile"
-        children={() => <MaybePile maybePile={maybePile} />}
+        children={() => (
+          <MaybePile maybePile={maybePile} setMaybePile={setMaybePile} />
+        )}
         options={{
           tabBarIcon: () => {
             return (
@@ -123,5 +127,8 @@ const styles = StyleSheet.create({
     height: "100%",
     marginBottom: "10%",
     marginTop: "10%",
+  },
+  headerStyle: {
+    height: 80, // Specify the height of your custom header
   },
 });
