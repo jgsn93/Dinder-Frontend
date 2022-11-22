@@ -11,9 +11,34 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-
-function Registration({ setEmail, setPassword, setPostcode }) {
+import {registerNewUser, getUserByUsername} from '../api.mjs';
+function Registration() {
   const navigation = useNavigation();
+  const [user, setNewUser] = useState({username: null, password: null, postcode: null})
+  const [successful, setSuccessful] = useState(null)
+  console.log(user)
+const handlePress = (() => {
+
+getUserByUsername(user.username).then((res) => {
+  if (res.data.length !== 0){
+    return Promise.reject(alert("IT DIDNT WORK"))
+  }
+  else{
+  console.log(res.data, "get USER by username")
+  registerNewUser(user).then((res) => {
+    if(res.status === 201){
+      setSuccessful(true);
+      alert('IT WORKED')
+      navigation.navigate("Log In");
+    }
+    console.log(res.status, "response")
+      console.log("successfully registered")
+    }).catch((err) => {
+    console.log(err);
+  })
+}
+  }
+)})
 
   return (
     <View style={styles.container}>
@@ -23,9 +48,13 @@ function Registration({ setEmail, setPassword, setPostcode }) {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Email"
+          placeholder="Username"
           placeholderTextColor="#003f5c"
-          onChangeText={(newEmail) => setEmail(newEmail)}
+          onChangeText={(newUsername) => setNewUser((current) => {
+          const newUser = {...current}
+          newUser.username = newUsername
+           setNewUser(newUser)
+          })}
         />
       </View>
 
@@ -35,7 +64,12 @@ function Registration({ setEmail, setPassword, setPostcode }) {
           placeholder="Password"
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
-          onChangeText={(newPassword) => setPassword(newPassword)}
+          onChangeText={(newPassword) => setNewUser((current) => {
+            const newUser = {...current}
+            newUser.password = newPassword
+            // console.log(newUser)
+             setNewUser(newUser)
+            })}
         />
       </View>
 
@@ -44,8 +78,12 @@ function Registration({ setEmail, setPassword, setPostcode }) {
           style={styles.TextInput}
           placeholder="Postcode"
           placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={(newPostcode) => setPostcode(newPostcode)}
+          onChangeText={(newPostcode) => setNewUser((current) => {
+            const newUser = {...current}
+            newUser.postcode = newPostcode
+            
+             setNewUser(newUser)
+            })}
           required="true"
         />
       </View>
@@ -63,9 +101,7 @@ function Registration({ setEmail, setPassword, setPostcode }) {
 
       <Pressable
         style={styles.loginBtn}
-        onPress={() => {
-          navigation.navigate("Profile");
-        }}
+        onPress={handlePress}
       >
         <Text style={styles.loginText}>REGISTER</Text>
       </Pressable>

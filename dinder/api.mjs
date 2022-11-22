@@ -23,3 +23,15 @@ export const getAllRestaurants = () => {
     return response.data;
   });
 };
+
+export const registerNewUser = ({username, password, postcode}) => {
+return dinderApi.post('/users', {username, password, postcode}).then((data) => {
+  return data;
+})
+}
+
+export const getUserByUsername = (username) => {
+return dinderApi.get(`/users/${username}`).then((data) => {
+  return data
+})
+}
