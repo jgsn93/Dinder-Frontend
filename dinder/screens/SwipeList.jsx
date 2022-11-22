@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Swiper from "react-native-deck-swiper";
 import { Button, StyleSheet, Text, View, Image } from "react-native";
-import { data } from "../api";
+import { imageData, getAllRestaurants } from "../api.mjs";
 
 export default function SwipeList({ setMaybePile }) {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getAllRestaurants().then((response) => {
+      response.forEach((restaurant) => {
+        restaurant.image = imageData[restaurant.type];
+      });
+      setData(response);
+      setIsLoading(false);
+    });
+  }, []);
+
   const swipeHandler = (cardIndex) => {
     setMaybePile((currMaybePile) => {
       return [...currMaybePile, cardIndex];
     });
   };
+
+  if (isLoading)
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+
+  console.log(data[0]);
 
   return (
     <View style={styles.container}>
