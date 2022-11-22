@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from "react";
 import Swiper from "react-native-deck-swiper";
 import { Button, StyleSheet, Text, View, Image } from "react-native";
+import Modal from "react-native-modal";
 import { imageData, getAllRestaurants } from "../api.mjs";
+import ChooseRestaurant from "../components/ChooseRestaurant.jsx";
 
 export default function SwipeList({ setMaybePile }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     getAllRestaurants().then((response) => {
+      function shuffleResponse(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          let temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+        }
+      }
+      shuffleResponse(response);
       response.forEach((restaurant) => {
         restaurant.image = imageData[restaurant.type];
       });
-      setData(response);
+
+      const restaurants = response.slice(0, 10);
+      setData(restaurants);
       setIsLoading(false);
     });
   }, []);
 
-  const swipeHandler = (cardIndex) => {
+  const swipeRightHandler = (cardIndex) => {
     setMaybePile((currMaybePile) => {
       return [...currMaybePile, cardIndex];
     });
@@ -29,8 +43,6 @@ export default function SwipeList({ setMaybePile }) {
         <Text>Loading...</Text>
       </View>
     );
-
-  console.log(data[0]);
 
   return (
     <View style={styles.container}>
@@ -45,11 +57,12 @@ export default function SwipeList({ setMaybePile }) {
               <Text style={styles.textLine}>📍 {card.addressLine1}</Text>
               <Text style={styles.textLine}>⭐ {card.ratingValue}/5</Text>
               <Text style={styles.textLine}>Less than 1 mile away</Text>
+              <ChooseRestaurant restaurantCard={card} />
             </View>
           );
         }}
         onSwipedRight={(cardIndex) => {
-          swipeHandler(data[cardIndex]);
+          swipeRightHandler(data[cardIndex]);
         }}
         onSwipedAll={() => {
           console.log("no more options");

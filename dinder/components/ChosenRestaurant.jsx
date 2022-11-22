@@ -12,8 +12,6 @@ import {
 import React from "react";
 
 export default function ChosenRestaurant({ restaurant }) {
-  console.log(restaurant);
-
   return (
     <Box
       maxW="80"
@@ -48,7 +46,7 @@ export default function ChosenRestaurant({ restaurant }) {
       </Box>
       <Stack p="4" space={3} alignItems="center">
         <Stack space={2}>
-          <Heading marginTop="5" size="md" ml="-1">
+          <Heading marginTop="10" size="md" ml="-1">
             {restaurant.name}
           </Heading>
         </Stack>
