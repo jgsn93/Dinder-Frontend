@@ -26,6 +26,7 @@ function ProfileCuisineDropdown() {
         boxStyles={{
           borderRadius: 20,
           margin: 12,
+          backgroundColor: "white",
         }}
         dropdownStyles={{ backgroundColor: "white" }}
         setSelected={(val) => setSelected(val)}

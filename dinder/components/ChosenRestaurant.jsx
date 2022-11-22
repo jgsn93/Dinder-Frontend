@@ -20,6 +20,7 @@ export default function ChosenRestaurant({ restaurant }) {
       marginTop="0"
       rounded="lg"
       marginLeft="35"
+      marginRight="35"
       overflow="hidden"
       borderColor="coolGray.200"
       borderWidth="1"
@@ -53,7 +54,7 @@ export default function ChosenRestaurant({ restaurant }) {
         </Stack>
         <Text fontWeight="400">🍴{restaurant.type}</Text>
         <Text fontWeight="400">
-          {restaurant.addressLine1} {restaurant.postCode}
+          📍{restaurant.addressLine1} {restaurant.postCode}
         </Text>
         <Text fontWeight="400"></Text>
       </Stack>
