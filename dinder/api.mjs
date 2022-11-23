@@ -24,14 +24,26 @@ export const getAllRestaurants = () => {
   });
 };
 
-export const registerNewUser = ({username, password, postcode}) => {
-return dinderApi.post('/users', {username, password, postcode}).then((data) => {
-  return data;
-})
-}
+export const getUsers = () => {
+  return dinderApi.get("/users").then((response) => {
+    return response;
+  });
+};
+
+export const registerNewUser = ({ username, password, postcode }) => {
+  return dinderApi
+    .post("/users", { username, password, postcode })
+    .then((data) => {
+      console.log(data);
+      return data;
+    })
+    .catch((err) => {
+      console.log(err.status, "<--- axios err");
+    });
+};
 
 export const getUserByUsername = (username) => {
-return dinderApi.get(`/users/${username}`).then((data) => {
-  return data
-})
-}
+  return dinderApi.get(`/users/${username}`).then((data) => {
+    return data;
+  });
+};
