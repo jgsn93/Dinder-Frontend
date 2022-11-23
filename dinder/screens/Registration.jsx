@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,34 +11,48 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import {registerNewUser, getUserByUsername} from '../api.mjs';
+import { registerNewUser, getUserByUsername, getUsers } from "../api.mjs";
 function Registration() {
   const navigation = useNavigation();
-  const [user, setNewUser] = useState({username: null, password: null, postcode: null})
-  const [successful, setSuccessful] = useState(null)
-  console.log(user)
-const handlePress = (() => {
+  const [user, setNewUser] = useState({
+    username: undefined,
+    password: undefined,
+    postcode: undefined,
+  });
+  const [usersDatabase, setUsersDatabase] = useState([]);
+  const [successful, setSuccessful] = useState(false);
 
-getUserByUsername(user.username).then((res) => {
-  if (res.data.length !== 0){
-    return Promise.reject(alert("IT DIDNT WORK"))
-  }
-  else{
-  console.log(res.data, "get USER by username")
-  registerNewUser(user).then((res) => {
-    if(res.status === 201){
-      setSuccessful(true);
-      alert('IT WORKED')
-      navigation.navigate("Log In");
+  useEffect(() => {
+    getUsers().then(({ data }) => {
+      const usernames = data.map((user) => {
+        return user.username;
+      });
+      setUsersDatabase(usernames);
+    });
+  }, [successful]);
+
+  const handlePress = () => {
+    if (usersDatabase.includes(user.username)) {
+      alert("Username already in use - please try again");
+    } else {
+      registerNewUser(user)
+        .then((res) => {
+          console.log(res, "<-- res");
+          if (res.status === 201) {
+            alert("Registration successful");
+            setSuccessful((currSuccessful) => {
+              setSuccessful(!currSuccessful);
+            });
+            navigation.navigate("Log In");
+          } else {
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("Registration failed - all fields required");
+        });
     }
-    console.log(res.status, "response")
-      console.log("successfully registered")
-    }).catch((err) => {
-    console.log(err);
-  })
-}
-  }
-)})
+  };
 
   return (
     <View style={styles.container}>
@@ -50,11 +64,13 @@ getUserByUsername(user.username).then((res) => {
           style={styles.TextInput}
           placeholder="Username"
           placeholderTextColor="#003f5c"
-          onChangeText={(newUsername) => setNewUser((current) => {
-          const newUser = {...current}
-          newUser.username = newUsername
-           setNewUser(newUser)
-          })}
+          onChangeText={(newUsername) =>
+            setNewUser((current) => {
+              const newUser = { ...current };
+              newUser.username = newUsername;
+              setNewUser(newUser);
+            })
+          }
         />
       </View>
 
@@ -64,12 +80,14 @@ getUserByUsername(user.username).then((res) => {
           placeholder="Password"
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
-          onChangeText={(newPassword) => setNewUser((current) => {
-            const newUser = {...current}
-            newUser.password = newPassword
-            // console.log(newUser)
-             setNewUser(newUser)
-            })}
+          onChangeText={(newPassword) =>
+            setNewUser((current) => {
+              const newUser = { ...current };
+              newUser.password = newPassword;
+              // console.log(newUser)
+              setNewUser(newUser);
+            })
+          }
         />
       </View>
 
@@ -78,12 +96,14 @@ getUserByUsername(user.username).then((res) => {
           style={styles.TextInput}
           placeholder="Postcode"
           placeholderTextColor="#003f5c"
-          onChangeText={(newPostcode) => setNewUser((current) => {
-            const newUser = {...current}
-            newUser.postcode = newPostcode
-            
-             setNewUser(newUser)
-            })}
+          onChangeText={(newPostcode) =>
+            setNewUser((current) => {
+              const newUser = { ...current };
+              newUser.postcode = newPostcode;
+
+              setNewUser(newUser);
+            })
+          }
           required="true"
         />
       </View>
@@ -101,7 +121,9 @@ getUserByUsername(user.username).then((res) => {
 
       <Pressable
         style={styles.loginBtn}
-        onPress={handlePress}
+        onPress={() => {
+          handlePress();
+        }}
       >
         <Text style={styles.loginText}>REGISTER</Text>
       </Pressable>
