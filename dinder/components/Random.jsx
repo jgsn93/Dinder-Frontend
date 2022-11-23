@@ -5,16 +5,19 @@ import React, {useState} from 'react'
 import ChosenRestaurant from "./ChosenRestaurant";
 
 
-const Random = ({ restaurantCard }) => {
+const Random = ({ restaurantCard, setRandom, maybePile }) => {
     const [isModalVisible, setModalVisible] = useState(false);
   
     const toggleModal = () => {
       setModalVisible(!isModalVisible);
     };
-  
+    const callTo = (() => {
+        toggleModal()
+        setRandom(maybePile[Math.floor(Math.random()*maybePile.length)])
+    }) 
     return (
       <View display="flex" alignItems="center">
-        <Pressable onPress={toggleModal}>
+        <Pressable onPress={callTo}>
           <Image
             style={{ flex: 1, width: 150, height: 150, marginTop: -20, marginBottom: -50 }}
             source={require("../images/button-imgs/random.png")}

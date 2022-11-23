@@ -15,6 +15,7 @@ export default function TabNavigator() {
   const [password, setPassword] = useState("");
   const [postcode, setPostcode] = useState("");
   const [maybePile, setMaybePile] = useState([]);
+  
 
   const screenOptions = {
     tabBarActiveTintColor: "#FD3A73",
@@ -72,7 +73,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Swipe List"
-        children={() => <SwipeList setMaybePile={setMaybePile} />}
+        children={() => <SwipeList setMaybePile={setMaybePile}  />}
         options={{
           tabBarIcon: () => {
             return (
