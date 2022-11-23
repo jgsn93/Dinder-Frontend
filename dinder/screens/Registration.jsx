@@ -37,7 +37,6 @@ function Registration() {
     } else {
       registerNewUser(user)
         .then((res) => {
-          console.log(res, "<-- res");
           if (res.status === 201) {
             alert("Registration successful");
             setSuccessful((currSuccessful) => {
