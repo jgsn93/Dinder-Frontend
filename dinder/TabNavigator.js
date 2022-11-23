@@ -15,7 +15,7 @@ export default function TabNavigator() {
   const [password, setPassword] = useState("");
   const [postcode, setPostcode] = useState("");
   const [maybePile, setMaybePile] = useState([]);
-  
+  const [preferences, setPreferences] = useState([]);
 
   const screenOptions = {
     tabBarActiveTintColor: "#FD3A73",
@@ -49,6 +49,8 @@ export default function TabNavigator() {
             setUsername={setUsername}
             password={password}
             setPassword={setPassword}
+            setPreferences={setPreferences}
+            setPostcode={setPostcode}
           />
         )}
         options={() => ({
@@ -72,7 +74,9 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Swipe List"
-        children={() => <SwipeList setMaybePile={setMaybePile}  />}
+        children={() => (
+          <SwipeList setMaybePile={setMaybePile} preferences={preferences} />
+        )}
         options={{
           tabBarIcon: () => {
             return (
@@ -104,7 +108,16 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Profile"
-        children={() => <Profile username={username} />}
+        children={() => (
+          <Profile
+            username={username}
+            password={password}
+            preferences={preferences}
+            setPreferences={setPreferences}
+            postcode={postcode}
+            setPostcode={setPostcode}
+          />
+        )}
         options={{
           tabBarIcon: () => {
             return (

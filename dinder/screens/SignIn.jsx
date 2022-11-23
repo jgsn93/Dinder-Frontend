@@ -15,16 +15,22 @@ import {
 } from "react-native";
 import { getUserByUsername } from "../api.mjs";
 
-function SignIn({ username, setUsername, password, setPassword }) {
+function SignIn({
+  username,
+  setUsername,
+  password,
+  setPassword,
+  setPreferences,
+  setPostcode,
+}) {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    console.log(username);
-    console.log(password);
-
     getUserByUsername(username).then((response) => {
       if (response.data[0].password === password) {
         alert("Login successful");
+        setPreferences(response.data[0].preferences);
+        setPostcode(response.data[0].postcode);
         navigation.navigate("Profile");
       } else {
         alert("Username and password does not match");
