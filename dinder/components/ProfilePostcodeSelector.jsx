@@ -5,9 +5,7 @@ import {
   SelectList,
 } from "react-native-dropdown-select-list";
 
-export default function ProfilePostcodeSelector() {
-  const [postcode, setPostcode] = useState("");
-
+export default function ProfilePostcodeSelector({ postcode, setPostcode }) {
   return (
     <SafeAreaView>
       <TextInput

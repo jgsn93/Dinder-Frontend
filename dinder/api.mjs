@@ -47,3 +47,22 @@ export const getUserByUsername = (username) => {
     return data;
   });
 };
+
+export const getAllPreferences = () => {
+  return dinderApi.get("/preferences").then((data) => {
+    return data;
+  });
+};
+
+export const patchUserByUsername = (
+  username,
+  password,
+  postcode,
+  preferences
+) => {
+  return dinderApi
+    .patch(`/users/${username}`, { username, password, postcode, preferences })
+    .then((data) => {
+      return data;
+    });
+};
