@@ -2,15 +2,18 @@ import React, { useState, useEffect } from "react";
 import Swiper from "react-native-deck-swiper";
 import { Button, StyleSheet, Text, View, Image } from "react-native";
 import Modal from "react-native-modal";
-import { imageData, getAllRestaurants } from "../api.mjs";
+import { imageData, getAllRestaurantsByLocation } from "../api.mjs";
 import ChooseRestaurant from "../components/ChooseRestaurant.jsx";
 
-export default function SwipeList({ setMaybePile }) {
+export default function SwipeList({ setMaybePile, preferences, postcode }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
-    getAllRestaurants().then((response) => {
+    getAllRestaurantsByLocation(postcode, preferences).then((response) => {
+      console.log(response);
+
       response.forEach((restaurant) => {
         restaurant.image = imageData[restaurant.type];
       });
@@ -59,7 +62,6 @@ export default function SwipeList({ setMaybePile }) {
         cardIndex={0}
         backgroundColor={"#FD3A73"}
         stackSize={5}
-        infinite={true}
         disableBottomSwipe={true}
       ></Swiper>
     </View>

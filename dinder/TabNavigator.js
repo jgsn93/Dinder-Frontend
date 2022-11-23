@@ -75,7 +75,11 @@ export default function TabNavigator() {
       <Tab.Screen
         name="Swipe List"
         children={() => (
-          <SwipeList setMaybePile={setMaybePile} preferences={preferences} />
+          <SwipeList
+            setMaybePile={setMaybePile}
+            preferences={preferences}
+            postcode={postcode}
+          />
         )}
         options={{
           tabBarIcon: () => {

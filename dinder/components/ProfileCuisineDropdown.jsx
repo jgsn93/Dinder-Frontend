@@ -8,8 +8,6 @@ function ProfileCuisineDropdown({ preferences, setPreferences }) {
   const [selected, setSelected] = useState([]);
   const [cuisineData, setCuisineData] = useState([]);
 
-  console.log(preferences);
-
   useEffect(() => {
     getAllPreferences().then((response) => {
       const cuisines = response.data.map((preference, index) => {

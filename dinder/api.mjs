@@ -19,9 +19,23 @@ const dinderApi = axios.create({
 });
 
 export const getAllRestaurants = () => {
-  return dinderApi.get("/restaurants").then((response) => {
+  return dinderApi.get(`/restaurants`, {}).then((response) => {
     return response.data;
   });
+};
+
+export const getAllRestaurantsByLocation = (postcode, preferences) => {
+  console.log(preferences, "<--- preferences");
+
+  return dinderApi
+    .get(`/restaurants/${postcode}`, {
+      params: {
+        preferences: preferences,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    });
 };
 
 export const getUsers = () => {
