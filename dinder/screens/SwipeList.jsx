@@ -9,24 +9,13 @@ export default function SwipeList({ setMaybePile }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalVisible, setModalVisible] = useState(false);
-
   useEffect(() => {
     getAllRestaurants().then((response) => {
-      function shuffleResponse(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          let j = Math.floor(Math.random() * (i + 1));
-          let temp = array[i];
-          array[i] = array[j];
-          array[j] = temp;
-        }
-      }
-      shuffleResponse(response);
       response.forEach((restaurant) => {
         restaurant.image = imageData[restaurant.type];
       });
 
-      const restaurants = response.slice(0, 10);
-      setData(restaurants);
+      setData(response);
       setIsLoading(false);
     });
   }, []);
@@ -70,6 +59,7 @@ export default function SwipeList({ setMaybePile }) {
         cardIndex={0}
         backgroundColor={"#FD3A73"}
         stackSize={5}
+        infinite={true}
         disableBottomSwipe={true}
       ></Swiper>
     </View>

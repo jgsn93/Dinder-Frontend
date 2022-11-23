@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View, StatusBar, Button, Pressable } from "react-native";
+import { ScrollView, StyleSheet, View, StatusBar, Button, Pressable, TouchableOpacity } from "react-native";
 import {
   Box,
   Heading,
@@ -9,13 +9,16 @@ import {
   HStack,
   Stack,
 } from "native-base";
-import React from "react";
+import React, {useState} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ChooseRestaurant from "../components/ChooseRestaurant";
 import Random from "../components/Random";
+import Reset from "../components/Reset";
+
 
 export default function MaybePile({ maybePile, setMaybePile }) {
-  let random = maybePile[Math.floor(Math.random()*maybePile.length)]
+  let randomRestaurant = maybePile[Math.floor(Math.random()*maybePile.length)]
+  const [random, setRandom] = useState(randomRestaurant)
   if (maybePile.length === 0) {
     return (
       <Box flex={1} bg="#FD3A73" alignItems="center" justifyContent="center">
@@ -89,13 +92,9 @@ export default function MaybePile({ maybePile, setMaybePile }) {
       </SafeAreaView>
       <View style={styles.container}>
         <View style={styles.buttonContainer}>
-          <Image
-            style={{ flex: 1 }}
-            source={require("../images/button-imgs/reset.png")}
-            alt="reset"
-          />
+          <Reset setMaybePile={setMaybePile} />
         </View>
-              <Random restaurantCard={random} />
+              <Random restaurantCard={random}setRandom={setRandom}maybePile={maybePile} />
               
         {/* <View style={styles.buttonContainer}>
           
