@@ -4,13 +4,13 @@ import { StyleSheet, Text, View, Image, Button } from "react-native";
 import ProfileCuisineDropdown from "../components/ProfileCuisineDropdown";
 import ProfilePostcodeSelector from "../components/ProfilePostcodeSelector";
 
-function Profile({ email }) {
+function Profile({ username }) {
   return (
     <View style={{ backgroundColor: "#FD3A73", height: 1000 }}>
       <Text
         style={{ textAlign: "center", marginTop: "20%", fontWeight: "bold" }}
       >
-        {email}
+        {username}
       </Text>
       <ProfilePostcodeSelector />
       <ProfileCuisineDropdown />

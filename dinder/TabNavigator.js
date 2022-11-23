@@ -11,7 +11,7 @@ import { getHeaderTitle } from "@react-navigation/elements";
 export default function TabNavigator() {
   const Tab = createBottomTabNavigator();
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [postcode, setPostcode] = useState("");
   const [maybePile, setMaybePile] = useState([]);
@@ -43,7 +43,12 @@ export default function TabNavigator() {
       <Tab.Screen
         name="Log In"
         children={() => (
-          <SignIn setEmail={setEmail} setPassword={setPassword} />
+          <SignIn
+            username={username}
+            setUsername={setUsername}
+            password={password}
+            setPassword={setPassword}
+          />
         )}
         options={() => ({
           tabBarStyle: {
@@ -55,13 +60,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Registration"
-        children={() => (
-          <Registration
-            setEmail={setEmail}
-            setPassword={setPassword}
-            setPostcode={setPostcode}
-          />
-        )}
+        children={() => <Registration />}
         options={() => ({
           tabBarStyle: {
             display: "none",
@@ -104,7 +103,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Profile"
-        children={() => <Profile email={email} />}
+        children={() => <Profile username={username} />}
         options={{
           tabBarIcon: () => {
             return (

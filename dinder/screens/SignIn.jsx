@@ -13,9 +13,24 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
+import { getUserByUsername } from "../api.mjs";
 
-function SignIn({ setEmail, setPassword }) {
+function SignIn({ username, setUsername, password, setPassword }) {
   const navigation = useNavigation();
+
+  const handlePress = () => {
+    console.log(username);
+    console.log(password);
+
+    getUserByUsername(username).then((response) => {
+      if (response.data[0].password === password) {
+        alert("Login successful");
+        navigation.navigate("Profile");
+      } else {
+        alert("Username and password does not match");
+      }
+    });
+  };
 
   return (
     <KeyboardAvoidingView
@@ -33,9 +48,9 @@ function SignIn({ setEmail, setPassword }) {
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
-              placeholder="Email"
+              placeholder="Username"
               placeholderTextColor="#003f5c"
-              onChangeText={(newEmail) => setEmail(newEmail)}
+              onChangeText={(newUsername) => setUsername(newUsername)}
             />
           </View>
 
@@ -63,7 +78,7 @@ function SignIn({ setEmail, setPassword }) {
           <Pressable
             style={styles.loginBtn}
             onPress={() => {
-              navigation.navigate("Profile");
+              handlePress();
             }}
           >
             <Text style={styles.loginText}>LOGIN</Text>
