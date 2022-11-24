@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Linking } from "react-native";
 import {
   Box,
   Heading,
@@ -55,6 +55,15 @@ export default function ChosenRestaurant({ restaurant }) {
           📍{restaurant.addressLine1} {restaurant.postCode}
         </Text>
         <Text fontWeight="400"></Text>
+        <TouchableOpacity
+          onPress={() => Linking.openURL("http://deliveroo.co.uk")}
+        >
+          <Image
+            source={require("../images/deliveroo-logo.png")}
+            style={{ width: 100, height: 100 }}
+            alt="deliveroo"
+          />
+        </TouchableOpacity>
       </Stack>
     </Box>
   );

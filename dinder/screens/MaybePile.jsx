@@ -1,28 +1,39 @@
-import { ScrollView, StyleSheet, View, StatusBar, Button, Pressable, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, View, StatusBar } from "react-native";
 import {
   Box,
   Heading,
   AspectRatio,
   Image,
   Text,
-  Center,
   HStack,
   Stack,
 } from "native-base";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ChooseRestaurant from "../components/ChooseRestaurant";
 import Random from "../components/Random";
 import Reset from "../components/Reset";
 
-
 export default function MaybePile({ maybePile, setMaybePile }) {
-  let randomRestaurant = maybePile[Math.floor(Math.random()*maybePile.length)]
-  const [random, setRandom] = useState(randomRestaurant)
+  const [random, setRandom] = useState(randomRestaurant);
+
+  let randomRestaurant =
+    maybePile[Math.floor(Math.random() * maybePile.length)];
+
   if (maybePile.length === 0) {
     return (
       <Box flex={1} bg="#FD3A73" alignItems="center" justifyContent="center">
-        <Text>Your Maybe Pile is empty! Get matches from your Swipe List!</Text>
+        <Text
+          style={{
+            marginLeft: 10,
+            marginRight: 10,
+            textAlign: "center",
+            fontSize: 15,
+            fontWeight: "bold",
+          }}
+        >
+          Your Maybe Pile is empty! 😔 Get matches from your Swipe List!
+        </Text>
       </Box>
     );
   }
@@ -38,10 +49,10 @@ export default function MaybePile({ maybePile, setMaybePile }) {
       >
         <ScrollView bg="#FD3A73">
           <Box bg="#FD3A73" alignItems="center">
-            {maybePile.map((restaurantCard) => {
+            {maybePile.map((restaurantCard, index) => {
               return (
                 <Box
-                  key={restaurantCard.name}
+                  key={index}
                   maxW="80"
                   marginTop="25"
                   rounded="lg"
@@ -94,16 +105,13 @@ export default function MaybePile({ maybePile, setMaybePile }) {
         <View style={styles.buttonContainer}>
           <Reset setMaybePile={setMaybePile} />
         </View>
-              <Random restaurantCard={random}setRandom={setRandom}maybePile={maybePile} />
-              
-        {/* <View style={styles.buttonContainer}>
-          
-          <Image
-            style={{ flex: 1 }}
-            source={require("../images/button-imgs/random.png")}
-            alt="random"
+        <View style={styles.buttonContainer}>
+          <Random
+            restaurantCard={random}
+            setRandom={setRandom}
+            maybePile={maybePile}
           />
-        </View> */}
+        </View>
       </View>
     </View>
   );

@@ -7,11 +7,10 @@ import {
   View,
   Image,
   TextInput,
-  Button,
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import { registerNewUser, getUserByUsername, getUsers } from "../api.mjs";
+import { registerNewUser, getUsers } from "../api.mjs";
 function Registration() {
   const navigation = useNavigation();
   const [user, setNewUser] = useState({
@@ -47,7 +46,6 @@ function Registration() {
           }
         })
         .catch((err) => {
-          console.log(err);
           alert("Registration failed - all fields required");
         });
     }
@@ -83,7 +81,6 @@ function Registration() {
             setNewUser((current) => {
               const newUser = { ...current };
               newUser.password = newPassword;
-              // console.log(newUser)
               setNewUser(newUser);
             })
           }
@@ -133,7 +130,6 @@ function Registration() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#fff",
     backgroundColor: "lightyellow",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -153,7 +149,6 @@ const styles = StyleSheet.create({
     height: 45,
     marginTop: 10,
     marginBottom: 20,
-
     alignItems: "center",
   },
 

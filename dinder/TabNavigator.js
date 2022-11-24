@@ -115,6 +115,7 @@ export default function TabNavigator() {
         children={() => (
           <Profile
             username={username}
+            setUsername={setUsername}
             password={password}
             preferences={preferences}
             setPreferences={setPreferences}

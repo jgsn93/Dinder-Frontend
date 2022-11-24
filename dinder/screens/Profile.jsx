@@ -7,34 +7,34 @@ import ProfilePostcodeSelector from "../components/ProfilePostcodeSelector";
 
 function Profile({
   username,
+  setUsername,
   postcode,
   setPostcode,
   preferences,
   setPreferences,
   password,
 }) {
-  const handlePress = () => {
-    patchUserByUsername(username, password, postcode, preferences).then(
-      (res) => {
-        alert("Changes successful");
-        console.log(res);
-      }
-    );
-  };
-
   return (
     <View style={{ backgroundColor: "#FD3A73", height: 1000 }}>
       <Text
-        style={{ textAlign: "center", marginTop: "20%", fontWeight: "bold" }}
+        style={{
+          textAlign: "center",
+          marginTop: "20%",
+          fontWeight: "bold",
+          fontSize: 25,
+        }}
       >
         {username}
       </Text>
       <ProfilePostcodeSelector postcode={postcode} setPostcode={setPostcode} />
       <ProfileCuisineDropdown
+        username={username}
+        setUsername={setUsername}
+        password={password}
         preferences={preferences}
+        postcode={postcode}
         setPreferences={setPreferences}
       />
-      <Button title="Update profile" onPress={() => handlePress()}></Button>
     </View>
   );
 }

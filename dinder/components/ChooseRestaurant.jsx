@@ -29,7 +29,7 @@ const ChooseRestaurant = ({ restaurantCard }) => {
             alt="It's a match"
           />
           <ChosenRestaurant restaurant={restaurantCard} />
-          <Button title="Exit" onPress={toggleModal} />
+          <Button color="white" title="Exit" onPress={toggleModal} />
         </View>
       </Modal>
     </View>

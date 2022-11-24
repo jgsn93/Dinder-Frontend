@@ -25,8 +25,6 @@ export const getAllRestaurants = () => {
 };
 
 export const getAllRestaurantsByLocation = (postcode, preferences) => {
-  console.log(preferences, "<--- preferences");
-
   return dinderApi
     .get(`/restaurants/${postcode}`, {
       params: {
@@ -48,7 +46,6 @@ export const registerNewUser = ({ username, password, postcode }) => {
   return dinderApi
     .post("/users", { username, password, postcode })
     .then((data) => {
-      console.log(data);
       return data;
     })
     .catch((err) => {

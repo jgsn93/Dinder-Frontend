@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Swiper from "react-native-deck-swiper";
-import { Button, StyleSheet, Text, View, Image } from "react-native";
-import Modal from "react-native-modal";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { imageData, getAllRestaurantsByLocation } from "../api.mjs";
 import ChooseRestaurant from "../components/ChooseRestaurant.jsx";
 
 export default function SwipeList({ setMaybePile, preferences, postcode }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     getAllRestaurantsByLocation(postcode, preferences).then((response) => {
-      console.log(response);
-
       response.forEach((restaurant) => {
         restaurant.image = imageData[restaurant.type];
       });
@@ -21,7 +18,7 @@ export default function SwipeList({ setMaybePile, preferences, postcode }) {
       setData(response);
       setIsLoading(false);
     });
-  }, []);
+  }, [preferences]);
 
   const swipeRightHandler = (cardIndex) => {
     setMaybePile((currMaybePile) => {
@@ -31,8 +28,8 @@ export default function SwipeList({ setMaybePile, preferences, postcode }) {
 
   if (isLoading)
     return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
+      <View style={styles.defaultBackground}>
+        <Text style={styles.textTitle}>Loading...</Text>
       </View>
     );
 
@@ -57,12 +54,13 @@ export default function SwipeList({ setMaybePile, preferences, postcode }) {
           swipeRightHandler(data[cardIndex]);
         }}
         onSwipedAll={() => {
-          console.log("no more options");
+          alert("No more options");
         }}
         cardIndex={0}
         backgroundColor={"#FD3A73"}
         stackSize={5}
-        disableBottomSwipe={true}
+        goBackToPreviousCardOnSwipeBottom={true}
+        disableTopSwipe={true}
       ></Swiper>
     </View>
   );
@@ -100,5 +98,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: "100%",
     height: "50%",
+  },
+  defaultBackground: {
+    flex: 1,
+    backgroundColor: "#FD3A73",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
